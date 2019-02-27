@@ -32,6 +32,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
+
+
+//this is edit activity
+
 public class Edit_Activity extends AppCompatActivity {
     private TextView gData,mDes,gTime;
     private ImageView gImage;
