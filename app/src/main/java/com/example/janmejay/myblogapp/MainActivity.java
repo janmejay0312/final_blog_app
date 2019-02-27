@@ -80,7 +80,7 @@ import static android.view.LayoutInflater.*;
     private ProgressBar progressBar;
     private android.support.v7.app.ActionBar actionBar;
     private FirebaseRecyclerAdapter<Blog, BlogViewHolder1> firebaseRecyclerAdapter;
-
+//this is main activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
