@@ -6,9 +6,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -77,8 +79,7 @@ import static android.view.LayoutInflater.*;
     private static final int GALLERY_REQUEST = 1;
     private Button choose;
     private ImageView your_photo;
-    private ProgressBar progressBar;
-    private android.support.v7.app.ActionBar actionBar;
+       private String imageUri;
     private FirebaseRecyclerAdapter<Blog, BlogViewHolder1> firebaseRecyclerAdapter;
 //this is main activity
     @Override
@@ -283,39 +284,57 @@ button.setOnClickListener(new View.OnClickListener() {
     }
 
         private void setProfilePicture() {
-        astorage=FirebaseStorage.getInstance().getReference().child("Photos").child(uri.getLastPathSegment());
-        astorage.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                astorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("image").setValue(uri.toString());
+            astorage = FirebaseStorage.getInstance().getReference().child("Photos").child(uri.getLastPathSegment());
+            astorage.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    astorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("image").setValue(uri.toString());
 
-                    }
-                });
-            }
-        });
-        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("image").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String imageUri=dataSnapshot.getValue(String.class);
-                Glide.with(getApplicationContext()).load(imageUri).into(your_photo);
+                        }
+                    });
+                }
+            });
+            FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("image").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                     imageUri = dataSnapshot.getValue(String.class);
+                    Glide.with(getApplicationContext()).load(imageUri).into(your_photo);
 
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }
+        protected void onRestart(){
+            super.onRestart();
 
-        @Override
+        }
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(authStateListener);
        firebaseRecyclerAdapter.startListening();
+       String user=FirebaseAuth.getInstance().getCurrentUser().getUid();
+       FirebaseDatabase.getInstance().getReference().child("User").child(user).child("image").addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               String prof=dataSnapshot.getValue(String.class);
+               Glide.with(getApplicationContext()).load(prof).into(your_photo);
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError databaseError) {
+
+           }
+       });
+
     }
     public static class BlogViewHolder1 extends RecyclerView.ViewHolder  {
      View mView;
