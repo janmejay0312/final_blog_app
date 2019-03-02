@@ -79,6 +79,7 @@ private ProgressDialog mprogressBar;
     Intent lIntent=new Intent(RegisterActivity.this,MainActivity.class);
     lIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(lIntent);
+    finish();
                     }
                 }
             });

@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -150,7 +151,7 @@ import static android.view.LayoutInflater.*;
         }
             you = FirebaseAuth.getInstance().getCurrentUser().getUid();
             View headerLayout =
-                    nv.inflateHeaderView(R.layout.nav_header);
+                    nv.getHeaderView(0);
             final TextView account_name = headerLayout.findViewById(R.id.account_your);
             FirebaseDatabase.getInstance().getReference().child("User").child(you).child("name").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -301,7 +302,7 @@ button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                      imageUri = dataSnapshot.getValue(String.class);
-                    Glide.with(getApplicationContext()).load(imageUri).into(your_photo);
+                    Glide.with(getApplicationContext()).load(imageUri).apply(RequestOptions.circleCropTransform()).into(your_photo);
 
 
                 }
@@ -326,7 +327,7 @@ button.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                String prof=dataSnapshot.getValue(String.class);
-               Glide.with(getApplicationContext()).load(prof).into(your_photo);
+               Glide.with(getApplicationContext()).load(prof).apply(RequestOptions.circleCropTransform()).into(your_photo);
            }
 
            @Override
