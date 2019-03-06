@@ -5,7 +5,7 @@
     android:layout_height="170dp"
     android:weightSum="1"
     android:orientation="horizontal"
-    android:gravity="center"
+
     android:background="@color/LightGoldenrodYellow">
 
         <ImageView
@@ -14,7 +14,6 @@
             android:layout_height="150dp"
             android:layout_weight=".4"
             android:background="@drawable/img"
-
              />
 <Button
     android:layout_width="0dp"
@@ -26,6 +25,10 @@
 <TextView
     android:layout_width="0dp"
     android:layout_height="150dp"
+    android:textAlignment="viewStart"
+    android:text="@string/name"
+    android:textSize="20sp"
+    android:textStyle="italic"
     android:id="@+id/account_your"
     android:layout_weight=".5"/>
 

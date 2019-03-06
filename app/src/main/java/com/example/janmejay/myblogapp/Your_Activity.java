@@ -64,9 +64,7 @@ public class Your_Activity extends AppCompatActivity {
         a.setHomeButtonEnabled(true);
         a.setDisplayHomeAsUpEnabled(true);
         recyclerView1.setLayoutManager(layoutManager1);
-        recyclerView1.addItemDecoration(new SimpleDividerItemDecoration(
-                getApplicationContext()
-        ));
+        recyclerView1.addItemDecoration(new EqualSpacingItemDecoration(16));
         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseDatabase.getInstance().getReference().child("User").child(currentUser).child("id").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -2,12 +2,16 @@ package com.example.janmejay.myblogapp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,12 +26,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import static android.R.id.content;
+
 public class LoginActivity extends AppCompatActivity {
 private EditText fEmail,fPassword;
 Button newUser;
        private Button mLogin;
         private FirebaseAuth firebaseAuth;
       private   DatabaseReference databaseReference;
+    private FloatingActionButton fab;
+ private CoordinatorLayout parentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,9 @@ Button newUser;
         fPassword=findViewById(R.id.password);
         newUser=findViewById(R.id.new_user);
         mLogin=findViewById(R.id.Login);
+
+
+
         firebaseAuth=FirebaseAuth.getInstance();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("User");
 mLogin.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +81,13 @@ checkUserExistence();
                     else
                     {
    Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });
         }
+
+
     }
 
     private void checkUserExistence() {

@@ -185,9 +185,7 @@ button.setOnClickListener(new View.OnClickListener() {
 //setting recyclerview
 
             recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new SimpleDividerItemDecoration(
-                    getApplicationContext()
-            ));
+            recyclerView.addItemDecoration(new EqualSpacingItemDecoration(26));
             builder = new AlertDialog.Builder(this);
             firebaseAuth = FirebaseAuth.getInstance();
             authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -366,7 +364,7 @@ image=itemView.findViewById(R.id.image1);
 public void setImage(String image,Context context){
 
     ImageView postImage=mView.findViewById(R.id.image1);
-    Glide.with(context).load(image).into(postImage);
+    Glide.with(context).load(image).apply(RequestOptions.centerCropTransform()).into(postImage);
 }
 public void setTime(String time){
             TextView textView=mView.findViewById(R.id.time);

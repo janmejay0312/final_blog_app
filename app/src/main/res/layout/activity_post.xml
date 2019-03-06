@@ -27,7 +27,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/line_divider"
+
         android:ems="10"
         android:hint="add title"
         android:inputType="textPersonName" />
