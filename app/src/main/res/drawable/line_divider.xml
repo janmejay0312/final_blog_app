@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:corners="http://schemas.android.com/aapt"
+    xmlns:corner="http://schemas.android.com/apk/res-auto"
     android:shape="rectangle">
 
     <size
@@ -8,11 +9,13 @@
         android:height="200dp" />
     <gradient
         android:angle="270"
-        android:centerColor="@android:color/transparent"
+        android:centerColor="@android:color/white"
         android:centerX="0.08"
-        android:centerY=".08"
-        android:startColor="@android:color/transparent" />
+        android:centerY="0.08"
+        android:startColor="@android:color/white"
+        android:endColor="@color/White"/>
 
 
-
+    <corners
+        android:radius="@dimen/cardview_default_elevation"/>
 </shape>

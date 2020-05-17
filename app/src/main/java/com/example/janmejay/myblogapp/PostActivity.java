@@ -1,48 +1,37 @@
 package com.example.janmejay.myblogapp;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import com.example.janmejay.myblogapp.RegisterActivity;
+
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Formatter;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PostActivity extends AppCompatActivity {
     private ImageButton addImage;
@@ -72,12 +61,13 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        getSupportActionBar().setTitle("Post");
         addImage = findViewById(R.id.imageview);
         submit = findViewById(R.id.button);
         title = findViewById(R.id.editText);
-s2=user.getUid();
+        s2=user.getUid();
         firebaseAuth1=FirebaseAuth.getInstance();
-        android.support.v7.app.ActionBar a=getSupportActionBar();
+        ActionBar a=getSupportActionBar();
         assert a != null;
         a.setHomeButtonEnabled(true);
         a.setDisplayHomeAsUpEnabled(true);
@@ -173,7 +163,7 @@ s2=user.getUid();
 
     private void startPosting() {
         progressBar.setMessage("Uploading...");
-        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.setProgress(0);//initially progress is 0
         progressBar.setMax(100);//sets the maximum value 100
         progressBar.show();
@@ -243,6 +233,8 @@ databaseReference=mDatabase.child(id1);
                     databaseReference.child("time").setValue(time);
                     databaseReference.child("title").setValue(s);
                     databaseReference.child("description").setValue(q);
+                  databaseReference.child("like").setValue(0);
+                    databaseReference.child("dislike").setValue(0);
                     progressBar.dismiss();
                     storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override

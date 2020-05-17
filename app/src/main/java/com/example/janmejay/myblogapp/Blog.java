@@ -6,17 +6,21 @@ public class Blog {
     private String description;
     private String id;
 
-    String time;
+    private String time;
+    private long upvote;
+    private long downvote;
     public Blog(){
         super();
     }
-    public Blog(String title,String image,String description,String id,String time)
+    public Blog(String title,String image,String description,String id,String time,long upvote,long downvote)
     {
         this.description=description;
         this.image=image;
         this.title=title;
         this.id=id;
         this.time=time;
+        this.upvote=upvote;
+        this.downvote=downvote;
 
     }
 
@@ -57,4 +61,18 @@ public class Blog {
    public void setTime(String time){
         this.time=time;
    }
+   public long getUpvote(){
+        return upvote;
+   }
+   public void setUpvote(long upvote){
+        this.upvote=upvote;
+   }
+
+    public long getDownvote() {
+        return downvote;
+    }
+
+    public void setDownvote(long downvote) {
+        this.downvote = downvote;
+    }
 }

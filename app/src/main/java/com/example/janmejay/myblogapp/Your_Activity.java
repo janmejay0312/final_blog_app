@@ -1,27 +1,17 @@
 package com.example.janmejay.myblogapp;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class Your_Activity extends AppCompatActivity {
 
@@ -45,7 +41,7 @@ public class Your_Activity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private AlertDialog.Builder builder;
     private ProgressBar progressBar;
-    private android.support.v7.app.ActionBar actionBar;
+    private ActionBar actionBar;
     private String id5, userId;
     private Query query;
     private FirebaseRecyclerAdapter<Blog, MainActivity.BlogViewHolder1> firebaseRecyclerAdapter;
@@ -59,7 +55,15 @@ public class Your_Activity extends AppCompatActivity {
         recyclerView1 = findViewById(R.id.recyclerview1);
         layoutManager1 = new LinearLayoutManager(this);
         recyclerView1.setHasFixedSize(true);
-        android.support.v7.app.ActionBar a = getSupportActionBar();
+        ActionBar a = getSupportActionBar();
+        LayoutInflater inflator = LayoutInflater.from(this);
+        View v = inflator.inflate(R.layout.action_bar_layout, null);
+        ((LinearLayout) v).setGravity(Gravity.RIGHT);
+
+        a.setCustomView(v);
+
+
+
         assert a != null;
         a.setHomeButtonEnabled(true);
         a.setDisplayHomeAsUpEnabled(true);
@@ -103,7 +107,7 @@ public class Your_Activity extends AppCompatActivity {
                                 v.getContext().startActivity(intent);
                             }
                         });
-                        final Button button = holder.share;
+                /*        final Button button = holder.share;
 
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -143,7 +147,49 @@ public class Your_Activity extends AppCompatActivity {
                                 popup.show();
                             }
 
+                        });*/
+                        holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                            @Override
+                            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                                menu.setHeaderTitle("Select Action");
+                                MenuItem edit = menu.add(Menu.NONE,1,1,"Edit");
+                                MenuItem delete = menu.add(Menu.NONE,2,2,"Delete");
+                                MenuItem share=menu.add(Menu.NONE,3,3,"Share");
+                                edit.setOnMenuItemClickListener(onChange);
+                                delete.setOnMenuItemClickListener(onChange);
+                                share.setOnMenuItemClickListener(onChange);
+                            }
+
+                            private final MenuItem.OnMenuItemClickListener onChange = new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()){
+                                        case 1:
+                                            Intent intent = new Intent(getApplicationContext(), PostActivity.class);
+                                            intent.putExtra("rowId", model.getId());
+                                            intent.putExtra("title", model.getTitle());
+                                            intent.putExtra("description", model.getDescription());
+                                            intent.putExtra("image", model.getImage());
+                                            getApplicationContext().startActivity(intent);
+                                            return true;
+                                        case 2:
+                                            mDatabase.child(model.getId()).removeValue();
+                                            return true;
+                                        case 3:
+                                            Intent in = new Intent(android.content.Intent.ACTION_SEND);
+                                            in.putExtra(Intent.EXTRA_TEXT, model.getDescription());
+                                            in.putExtra(Intent.EXTRA_TEXT, model.getImage());
+                                            in.setType("text/plain");
+                                            getApplicationContext().startActivity(Intent.createChooser(in, "share via"));
+                                            return true;
+
+                                    }
+                                    return false;
+                                }
+                            };
                         });
+
+
                     }
                 };
                 firebaseRecyclerAdapter.startListening();

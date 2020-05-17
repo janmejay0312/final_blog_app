@@ -2,17 +2,13 @@ package com.example.janmejay.myblogapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,8 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.security.PrivateKey;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 private EditText yName,yEmail,yPassword;
@@ -70,16 +69,26 @@ private ProgressDialog mprogressBar;
                     if(task.isSuccessful()){
                         final String id1= UUID.randomUUID().toString();
                         s1=firebaseAuth.getCurrentUser().getUid();
-     DatabaseReference databaseReference=firebaseDatabase.child(s1);
+                        firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener( new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@androidx.annotation.NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    DatabaseReference databaseReference=firebaseDatabase.child(s1);
 
-     databaseReference.child("name").setValue(sName);
-     databaseReference
-             .child("id").setValue(id1);
-     mprogressBar.dismiss();
-    Intent lIntent=new Intent(RegisterActivity.this,MainActivity.class);
-    lIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(lIntent);
-    finish();
+                                    databaseReference.child("name").setValue(sName);
+                                    databaseReference
+                                            .child("id").setValue(id1);
+                                    mprogressBar.dismiss();
+Toast.makeText(RegisterActivity.this,"Register successFully and verification mail sent to your mail",Toast.LENGTH_SHORT).show();
+
+                                    Intent lIntent=new Intent(RegisterActivity.this,LoginActivity.class);
+                                    lIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(lIntent);
+                                    finish();
+                                }
+                            }
+                        });
+
                     }
                 }
             });

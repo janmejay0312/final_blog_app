@@ -1,37 +1,19 @@
 package com.example.janmejay.myblogapp;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 //this is edit activity
@@ -42,6 +24,7 @@ public class Edit_Activity extends AppCompatActivity {
 private DatabaseReference databaseRef,rDatabase;
 private static final int GALLERY_INTENT=2;
 private boolean isImageFitToScreen;
+Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +43,11 @@ private boolean isImageFitToScreen;
         String Des = bundle.getString("description");
         String title=bundle.getString("title");
         String time=bundle.getString("time");
-        String image=bundle.getString("image");
+        final String image=bundle.getString("image");
+        gImage.setScaleType(ImageView.ScaleType.FIT_XY);
+      /*  Bitmap bitmap=BitmapFactory.decode(image);
+        int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
+        Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);*/
         Glide.with(this).load(image).into(gImage);
         gData.setText(Des);
         mDes.setText(title);
@@ -68,12 +55,14 @@ private boolean isImageFitToScreen;
         gImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.blog);
+             /*   Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.blog);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
+                byte[] byteArray = stream.toByteArray();*/
+                //gImage.buildDrawingCache();
+                //Bitmap bitmap=gImage.getDrawingCache();
                 Intent intent = new Intent(Edit_Activity.this, ImageDisplay.class);
-                intent.putExtra("picture", byteArray);
+                intent.putExtra("picture", image);
                 startActivity(intent);
             }
         });

@@ -1,12 +1,14 @@
 package com.example.janmejay.myblogapp;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Base64;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ImageDisplay extends AppCompatActivity {
 
@@ -15,14 +17,15 @@ public class ImageDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
 
-
-        Bundle extras = getIntent().getExtras();
-        byte[] byteArray = extras.getByteArray("picture");
-
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         ImageView image =  findViewById(R.id.display);
+        Bundle extras = getIntent().getExtras();
+        String image1 = extras.getString("picture");
+       // Bitmap bitmap = decodeImage(image1);
 
-        image.setImageBitmap(bmp);
+       // Bitmap bmp = (Bitmap)getIntent().getParcelableArrayExtra("picture");
+       // ImageView image =  findViewById(R.id.display);
+        Glide.with(getApplicationContext()).load(image1).into(image);
+       // image.setImageBitmap(bitmap);
 
     /*   if(getIntent().hasExtra("byteArray")){
            imageView =new ImageView(this);
@@ -33,6 +36,12 @@ public class ImageDisplay extends AppCompatActivity {
         extras.putParcelable("imagebitmap", image);
         intent.putExtras(extras);
         startActivity(intent);*/
+    }
+
+    private Bitmap decodeImage(String image1) {
+        byte[] b = Base64.decode(image1, Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
+        return bmp;
     }
 }
 /*if(getIntent().hasExtra("byteArray")) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.janmejay.myblogapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,7 +11,10 @@
         android:label="blogify"
         android:roundIcon="@mipmap/blueblogicon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Change_Password"></activity>
+        <activity android:name=".ForgetPassword" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
