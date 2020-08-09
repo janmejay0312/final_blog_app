@@ -56,6 +56,7 @@ public class Your_Activity extends AppCompatActivity {
         layoutManager1 = new LinearLayoutManager(this);
         recyclerView1.setHasFixedSize(true);
         ActionBar a = getSupportActionBar();
+        a.setTitle("Your Blog");
         LayoutInflater inflator = LayoutInflater.from(this);
         View v = inflator.inflate(R.layout.action_bar_layout, null);
         ((LinearLayout) v).setGravity(Gravity.RIGHT);
@@ -170,7 +171,9 @@ public class Your_Activity extends AppCompatActivity {
                                             intent.putExtra("title", model.getTitle());
                                             intent.putExtra("description", model.getDescription());
                                             intent.putExtra("image", model.getImage());
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             getApplicationContext().startActivity(intent);
+
                                             return true;
                                         case 2:
                                             mDatabase.child(model.getId()).removeValue();
@@ -181,6 +184,8 @@ public class Your_Activity extends AppCompatActivity {
                                             in.putExtra(Intent.EXTRA_TEXT, model.getImage());
                                             in.setType("text/plain");
                                             getApplicationContext().startActivity(Intent.createChooser(in, "share via"));
+                                            in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                                             return true;
 
                                     }

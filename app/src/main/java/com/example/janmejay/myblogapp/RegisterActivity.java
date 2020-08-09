@@ -42,6 +42,8 @@ private ProgressDialog mprogressBar;
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseDatabase=FirebaseDatabase.getInstance().getReference().child("User");
         ActionBar c=getSupportActionBar();
+
+        c.setTitle("Register");
         assert c!=null;
         c.setHomeButtonEnabled(true);
         c.setDisplayHomeAsUpEnabled(true);

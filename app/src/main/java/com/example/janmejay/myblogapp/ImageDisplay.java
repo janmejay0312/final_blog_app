@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ImageDisplay extends AppCompatActivity {
@@ -21,7 +22,8 @@ public class ImageDisplay extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String image1 = extras.getString("picture");
        // Bitmap bitmap = decodeImage(image1);
-
+        ActionBar a=getSupportActionBar();
+        a.setTitle("Picture");
        // Bitmap bmp = (Bitmap)getIntent().getParcelableArrayExtra("picture");
        // ImageView image =  findViewById(R.id.display);
         Glide.with(getApplicationContext()).load(image1).into(image);

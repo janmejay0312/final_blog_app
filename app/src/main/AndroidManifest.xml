@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Change_Password"></activity>
+        <activity android:name=".Change_Password" />
         <activity android:name=".ForgetPassword" />
         <activity android:name=".SplashScreen">
             <intent-filter>

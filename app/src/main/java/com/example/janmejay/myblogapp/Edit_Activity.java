@@ -36,6 +36,7 @@ Context context;
         databaseRef=FirebaseDatabase.getInstance().getReference();
 
         ActionBar b=getSupportActionBar();
+        b.setTitle("description");
         assert b!=null;
         b.setHomeButtonEnabled(true);
         b.setDisplayHomeAsUpEnabled(true);

@@ -78,6 +78,7 @@ public class PostActivity extends AppCompatActivity {
         if (intent != null) {
             if(getIntent().getStringExtra("rowId")!=null){
                 submit.setText("update");
+
             }else {
                 submit.setText("submit");
             }
@@ -110,9 +111,11 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(getIntent().getStringExtra("rowId")!=null){
                    startUpdating();
+
                 }else {
                     startPosting();
                 }
+
             }
 
         });
@@ -194,7 +197,7 @@ public class PostActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     // close the progress bar dialog
-                    progressBar.dismiss();
+
                 }
             }
         }).start();

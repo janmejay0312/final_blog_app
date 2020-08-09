@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         mLogin=findViewById(R.id.Login);
         forgotPassword=findViewById(R.id.forgot_password);
         mprogressBar=new ProgressDialog(this);
+        ActionBar a=getSupportActionBar();
+        a.setTitle("Login");
         //onBackPressed();
         firebaseAuth=FirebaseAuth.getInstance();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("User");
